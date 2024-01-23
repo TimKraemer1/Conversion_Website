@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask-File Drag Drop System</title>
+    {{ dropzone.load_css() }}
+    {{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px;') }}
+</head>
+<body>
+    <div style="color:black;font-size:20px;text-align:center;border:10px solid #0087F7">
+    File Converter</div>
+
+    {{ dropzone.create(action='upload') }}
+    {{ dropzone.load_js() }}
+    {{dropzone.config() }}
+    <form action="/jpg_png" method="post">
+        <button type="submit">JPG to PNG</button>
+    </form>
+    <form action="/png_jpg" method="post">
+        <button type="submit">PNG to JPG</button>
+    </form>
+</body>
+</html>
