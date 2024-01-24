@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_file
 from flask_dropzone import Dropzone
 
 import conversions
@@ -26,10 +26,14 @@ def png_jpg():
     directory = os.fsencode(os.getcwd() + '/uploads')
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
-        print(filename)
+        if filename == '.DS_Store':
+            continue
         conversions.pngTojpg('uploads/' + filename)
+    
+    orig, _ = os.path.splitext(filename)
+    return send_file('uploads/' + orig + '.jpg', as_attachment=True)
 
-    return '', 204
+    #return '', 204
 
 @app.route('/jpg_png', methods=['POST'])
 def jpg_png():
@@ -37,9 +41,13 @@ def jpg_png():
     directory = os.fsencode(os.getcwd() + '/uploads')
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
-        print(filename)
+        if filename == '.DS_Store':
+            continue
         conversions.jpgTopng('uploads/' + filename)
-    return '', 204
+    
+    orig, _ = os.path.splitext(filename)
+    return send_file('uploads/' + orig + '.png', as_attachment=True)
+    #return '', 204
     
 
 if __name__ == '__main__':
